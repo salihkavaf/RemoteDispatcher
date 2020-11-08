@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30608.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteDispatcher", "RemoteDispatcher\RemoteDispatcher.csproj", "{AB4A6F0A-887A-47D4-9F82-1CEC163D867C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteDispatcher", "src\RemoteDispatcher\RemoteDispatcher.csproj", "{AB4A6F0A-887A-47D4-9F82-1CEC163D867C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

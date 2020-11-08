@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+
+	  <PackAsTool>true</PackAsTool>
+	  <ToolCommandName>salih-rd</ToolCommandName>
+	  <PackageOutputPath>./nupkg</PackageOutputPath>
+	  <Authors>Salih Kavaf</Authors>
+	  <Description>A .NET Core tool for managing remote Github workflow_dispatch action triggering.</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="nupkg\**" />
+    <EmbeddedResource Remove="nupkg\**" />
+    <None Remove="nupkg\**" />
+  </ItemGroup>
+
+</Project>
