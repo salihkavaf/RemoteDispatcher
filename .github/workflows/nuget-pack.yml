@@ -11,7 +11,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 5.0.100-preview.8.20417.9
+          dotnet-version: 5.0.100-rc.2.20479.15
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.GIT_PACK }}
       # Authenticate (if this is the first time) Note you must also pass --store-password-in-clear-text on non-Windows systems.
