@@ -1,26 +1,20 @@
-﻿using System;
-using System.Reflection;
+﻿using MatthiWare.CommandLine;
+using RemoteDispatcher.Properties;
 
 namespace RemoteDispatcher
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            if (args.Length == 0)
+            var options = new CommandLineParserOptions
             {
-                var versionString =
-                    Assembly.GetEntryAssembly()
-                        .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                        .InformationalVersion
-                        .ToString();
+                AppName = Resources.ApplicationName
+            };
 
-                Console.WriteLine($"salih-rd v{versionString}");
-                Console.WriteLine("-------------");
-                Console.WriteLine("\nUsage:");
-                Console.WriteLine("  salih-rd <message>");
-                return;
-            }
+            var parser = new CommandLineParser(options);
+            parser.AddCommand()
+                .OnExecuting
         }
     }
 }
