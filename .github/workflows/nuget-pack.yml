@@ -1,11 +1,11 @@
 name: NuGet Pack
 on:
   release:
-    types: [ published ]
+    types: [release, prerelease]
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     
     steps:
       - uses: actions/checkout@v2
