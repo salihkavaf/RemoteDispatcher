@@ -4,9 +4,6 @@ on:
     types:
       - released
       - prereleased
-  workflow_dispatch:
-    branches:
-      - master
 
 jobs:
   publish:
