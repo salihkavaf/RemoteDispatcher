@@ -1,9 +1,12 @@
 name: NuGet Pack
 on:
-  workflow_dispatch:
   release:
-    types: [released, prereleased]
-  
+    types:
+      - released
+      - prereleased
+  workflow_dispatch:
+    branches:
+      - master
 
 jobs:
   publish:
