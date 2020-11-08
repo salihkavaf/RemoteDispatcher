@@ -1,0 +1,41 @@
+name: NuGet Pack
+on:
+  release:
+    types: [ published ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.100-preview.8.20417.9
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.GIT_PACK }}
+
+      # Authenticate (if this is the first time) Note you must also pass --store-password-in-clear-text on non-Windows systems.
+      - name: Authenticate NuGet
+        run: dotnet nuget add source https://nuget.pkg.github.com/salihkavaf/index.json -n github -u salihkavaf -p ${{ secrets.GIT_PACK }} --store-password-in-clear-text
+      
+      - name: Build Project
+        run: |
+          cd src/RemoteDispatcher
+          dotnet build RemoteDispatcher.csproj -c Release
+      
+      - name: Generate NuGet package
+        run: >
+          cd src/RemoteDispatcher
+          
+          dotnet pack -c Release
+          /p:Version=${{ github.event.release.tag_name }}
+          /p:PackageReleaseNotes="See https://github.com/salihkavaf/RemoteDispatcher/releases/tag/${{ github.event.release.tag_name }}"
+        working-directory: ./
+        
+      - name: Push generated package to GitHub registry
+        run: >
+          dotnet nuget push
+          ./src/RemoteDispatcher/bin/Release/RemoteDispatcher.${{ github.event.release.tag_name }}.nupkg
+          --skip-duplicate --no-symbols true --source github --api-key ${{ secrets.GIT_PACK }}
