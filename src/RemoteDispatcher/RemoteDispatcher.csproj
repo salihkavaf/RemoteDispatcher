@@ -4,11 +4,13 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
 
-	  <PackAsTool>true</PackAsTool>
-	  <ToolCommandName>salih-rd</ToolCommandName>
-	  <PackageOutputPath>./nupkg</PackageOutputPath>
-	  <Authors>Salih Kavaf</Authors>
-	  <Description>A .NET Core tool for managing remote Github workflow_dispatch action triggering.</Description>
+	<PackAsTool>true</PackAsTool>
+	<ToolCommandName>salih-rd</ToolCommandName>
+	<PackageOutputPath>./nupkg</PackageOutputPath>
+	<Authors>Salih Kavaf</Authors>
+	<Description>A .NET Core tool for managing remote Github workflow_dispatch action triggering.</Description>
+	<RepositoryUrl>https://github.com/salihkavaf/RemoteDispatcher.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
