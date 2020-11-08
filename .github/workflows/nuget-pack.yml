@@ -1,9 +1,7 @@
 name: NuGet Pack
 on:
   release:
-    types:
-      - released
-      - prereleased
+    types: [released, prereleased]
 
 jobs:
   publish:
