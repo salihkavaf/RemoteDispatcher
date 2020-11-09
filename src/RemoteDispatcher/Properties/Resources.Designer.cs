@@ -65,10 +65,26 @@ namespace RemoteDispatcher.Properties {
         /// </summary>
         internal static string ApplicationName
         {
-            get
-            {
-                return ResourceManager.GetString("ApplicationName", resourceCulture);
-            }
+            get => ResourceManager.GetString("ApplicationName", resourceCulture);
+        }
+
+        /// <summary>
+        ///     Looks up a localized string similar to The required attribute..
+        /// </summary>
+        /// <param name="attrName">The attribute name to set.</param>
+        /// <returns>The formatted error message.</returns>
+        internal static string RequiredAttributeError(string attrName)
+        {
+            return string.Format(ResourceManager.GetString("RequiredAttributeError"), attrName);
+        }
+
+
+        /// <summary>
+        ///   Looks up a localized string that represents the environment variables prefix.
+        /// </summary>
+        internal static string EnvPrefix
+        {
+            get => ResourceManager.GetString("EnvPrefix", resourceCulture);
         }
     }
 }

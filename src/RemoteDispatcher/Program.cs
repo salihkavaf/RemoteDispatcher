@@ -1,20 +1,29 @@
-﻿using MatthiWare.CommandLine;
+﻿using Microsoft.Extensions.Configuration;
+using RemoteDispatcher.Commands;
+using RemoteDispatcher.Infrastucture;
 using RemoteDispatcher.Properties;
+using System;
 
 namespace RemoteDispatcher
 {
-    internal class Program
+    public class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var options = new CommandLineParserOptions
-            {
-                AppName = Resources.ApplicationName
-            };
+            var builder =
+                new ConfigurationBuilder()
+                    .AddEnvironmentVariables();
 
-            var parser = new CommandLineParser(options);
-            parser.AddCommand()
-                .OnExecuting
+            var config = builder.Build();
+
+            var env = config["CLIENT_ID"];
+
+            ParserBuilder.Builder
+                .Configure(manager =>
+                {
+                    manager.AddAsyncCommand<RepositoryDispatchCommand>();
+                })
+                .Build(args);
         }
     }
 }

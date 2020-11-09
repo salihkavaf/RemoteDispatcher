@@ -120,4 +120,12 @@
   <data name="ApplicationName" xml:space="preserve">
     <value>Remote Dispatcher by Salih</value>
   </data>
+  <data name="EnvPrefix" xml:space="preserve">
+    <value>SALIH_RD_</value>
+    <comment>The prefix that the environment variables must start with.</comment>
+  </data>
+  <data name="RequiredAttributeError" xml:space="preserve">
+    <value>The attribute '{0}' is required.</value>
+    <comment>The error message for a required attribute that wasn't provide in where it supposed to be.</comment>
+  </data>
 </root>

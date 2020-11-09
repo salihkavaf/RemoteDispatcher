@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "RemoteDispatcher": {
+      "commandName": "Project",
+      "commandLineArgs": "dispatch-repository -o Primorisoft -r Primorisoft.Data -e myEvent"
+    }
+  }
+}
