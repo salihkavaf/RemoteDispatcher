@@ -1,28 +1,28 @@
-﻿using MatthiWare.CommandLine;
-using RemoteDispatcher.Properties;
+﻿using Microsoft.Extensions.Configuration;
 using System;
 
 namespace RemoteDispatcher.Infrastucture
 {
     public sealed class ParserBuilder
     {
-        private readonly ParsingManager manager;
+        #region Private Members
 
-        public static readonly ParserBuilder Builder = new ParserBuilder();
+        private readonly ParsingManager manager;
+        private readonly IConfiguration configuration;
+
+        #endregion Private Members
 
         /// <summary>
         ///     Initializes a new instance of <see cref="ParserBuilder"/>.
         /// </summary>
-        private ParserBuilder()
+        /// <param name="configuration">The <see cref="IConfiguration"/>, used to access the application settings.</param>
+        /// <param name="manager">The parsing manager to set the command line parsing structure.</param>
+        public ParserBuilder(
+            IConfiguration configuration,
+            ParsingManager manager)
         {
-            var options = new CommandLineParserOptions
-            {
-                AppName = Resources.ApplicationName,
-                EnableHelpOption = true,
-                HelpOptionName = "help",
-                AutoPrintUsageAndErrors = true
-            };
-            manager = new ParsingManager(options);
+            this.configuration = configuration;
+            this.manager = manager;
         }
 
         /// <summary>

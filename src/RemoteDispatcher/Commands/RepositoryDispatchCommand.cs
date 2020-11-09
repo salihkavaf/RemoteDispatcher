@@ -52,6 +52,12 @@ namespace RemoteDispatcher.Commands
         [AName("p", "client-payload"), ADescription("JSON payload with extra information about the webhook event that your action or workflow may use.")]
         public string ClientPayload { get; set; }
 
+        /// <summary>
+        ///     Gets or sets a flag indicating whether the target repository is private or not.
+        /// </summary>
+        [AName("p", "is-private"), ADescription("The flag indicating whether the target repo id private or not.")]
+        public bool IsPrivate { get; set; }
+
         /// <inheritdoc />
         public override async Task OnExecutingAsync(object args, RepositoryDispatchCommand command, CancellationToken cancellationToken)
         {

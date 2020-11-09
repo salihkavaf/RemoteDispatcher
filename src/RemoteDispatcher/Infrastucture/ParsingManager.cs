@@ -4,7 +4,6 @@ using RemoteDispatcher.Properties;
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace RemoteDispatcher.Infrastucture
 {
@@ -13,12 +12,6 @@ namespace RemoteDispatcher.Infrastucture
     /// </summary>
     public class ParsingManager
     {
-        /// <summary>
-        ///     Initializes a new instance of <see cref="ParsingManager"/>.
-        /// </summary>
-        public ParsingManager()
-            => Parser = new CommandLineParser();
-
         /// <summary>
         ///     Initializes a new instance of <see cref="ParsingManager"/>.
         /// </summary>

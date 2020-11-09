@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MatthiWare.CommandLine;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using RemoteDispatcher.Commands;
 using RemoteDispatcher.Infrastucture;
 using RemoteDispatcher.Properties;
-using System;
 
 namespace RemoteDispatcher
 {
@@ -10,20 +11,32 @@ namespace RemoteDispatcher
     {
         public static void Main(string[] args)
         {
-            var builder =
-                new ConfigurationBuilder()
-                    .AddEnvironmentVariables();
+            var config = new ConfigurationBuilder()
+                    .AddEnvironmentVariables(Resources.EnvPrefix)
+                    .Build();
 
-            var config = builder.Build();
-
-            var env = config["CLIENT_ID"];
-
-            ParserBuilder.Builder
+            RegisterServices(config)
+                .GetService<ParserBuilder>()
                 .Configure(manager =>
                 {
                     manager.AddAsyncCommand<RepositoryDispatchCommand>();
                 })
                 .Build(args);
+        }
+
+        public static ServiceProvider RegisterServices(IConfiguration configuration)
+        {
+            var serviceProvider = new ServiceCollection()
+                .AddSingleton(configuration)
+                .AddSingleton(new CommandLineParserOptions
+                {
+                    AppName = Resources.ApplicationName
+                })
+                .AddSingleton<ParsingManager>()
+                .AddSingleton<ParserBuilder>()
+                .BuildServiceProvider();
+
+            return serviceProvider;
         }
     }
 }
