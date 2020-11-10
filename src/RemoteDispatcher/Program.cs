@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RemoteDispatcher.Commands;
-using RemoteDispatcher.Infrastucture;
 using RemoteDispatcher.Properties;
+using System;
 
 namespace RemoteDispatcher
 {
@@ -11,32 +11,34 @@ namespace RemoteDispatcher
     {
         public static void Main(string[] args)
         {
-            var config = new ConfigurationBuilder()
+            var services = RegisterServices();
+            var options = new CommandLineParserOptions
+            {
+                AppName = Resources.ApplicationName
+            };
+
+            var parser = new CommandLineParser(options, services);
+
+            parser.RegisterCommand<RepoDispatchCommand, RepoDispatchOptions>();
+
+            var result = parser.Parse(args);
+            if (result.HasErrors)
+            {
+                foreach (var error in result.Errors)
+                {
+                    Console.Error.WriteLine(error);
+                }
+            }
+        }
+
+        public static IServiceCollection RegisterServices()
+        {
+            var configuration = new ConfigurationBuilder()
                     .AddEnvironmentVariables(Resources.EnvPrefix)
                     .Build();
 
-            RegisterServices(config)
-                .GetService<ParserBuilder>()
-                .Configure(manager =>
-                {
-                    manager.AddAsyncCommand<RepositoryDispatchCommand>();
-                })
-                .Build(args);
-        }
-
-        public static ServiceProvider RegisterServices(IConfiguration configuration)
-        {
-            var serviceProvider = new ServiceCollection()
-                .AddSingleton(configuration)
-                .AddSingleton(new CommandLineParserOptions
-                {
-                    AppName = Resources.ApplicationName
-                })
-                .AddSingleton<ParsingManager>()
-                .AddSingleton<ParserBuilder>()
-                .BuildServiceProvider();
-
-            return serviceProvider;
+            return new ServiceCollection()
+                .AddSingleton<IConfiguration>(configuration);
         }
     }
 }
