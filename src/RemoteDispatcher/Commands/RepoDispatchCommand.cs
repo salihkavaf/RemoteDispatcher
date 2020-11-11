@@ -32,6 +32,7 @@ namespace RemoteDispatcher.Commands
         private const string RelativeUri = "repos/{0}/{1}/dispatches";
         private readonly IConfiguration configuration;
 
+        /// <inheritdoc />
         public override void OnConfigure(ICommandConfigurationBuilder builder)
         {
             builder.Name(Name);
@@ -65,7 +66,7 @@ namespace RemoteDispatcher.Commands
         /// <summary>
         ///     Prints out command properties.
         /// </summary>
-        /// <param name="command">The command to print its properties out.</param>
+        /// <param name="options">The provided options to use in configuration.</param>
         private void LogInfo(RepoDispatchOptions options)
         {
             foreach (var property in GetType().GetProperties(BindingFlags.Public))
@@ -78,7 +79,7 @@ namespace RemoteDispatcher.Commands
         /// <summary>
         ///     Executes an HTTP Post request, as an asynchronous operation.
         /// </summary>
-        /// <param name="command">The command to get the data from.</param>
+        /// <param name="options">The provided options to use in configuration.</param>
         /// <param name="cancellationToken">The token to check whether the operation should be canceled or not.</param>
         /// <returns>
         ///     The <see cref="Task"/> object that represents the asynchronous operation, containing the response message.
