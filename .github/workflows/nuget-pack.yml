@@ -12,12 +12,10 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.100-rc.2.20479.15
-        env:
-          NUGET_AUTH_TOKEN: ${{ secrets.GIT_PACK }}
       
       # Authenticate (if this is the first time) Note you must also pass --store-password-in-clear-text on non-Windows systems.
       - name: Authenticate NuGet
-        run: dotnet nuget add source https://nuget.pkg.github.com/salihkavaf/index.json -n github -u salihkavaf -p ${NUGET_AUTH_TOKEN} --store-password-in-clear-text
+        run: dotnet nuget add source https://nuget.pkg.github.com/salihkavaf/index.json -n github -u salihkavaf -p ${{ secrets.GIT_PACK }} --store-password-in-clear-text
       
       - name: Build Project
         run: |
@@ -39,7 +37,7 @@ jobs:
 #         run: >
 #           dotnet nuget push
 #           ./src/RemoteDispatcher/nupkg/RemoteDispatcher.${{ github.event.release.tag_name }}.nupkg
-#           --skip-duplicate --no-symbols true --source github --api-key ${NUGET_AUTH_TOKEN}
+#           --skip-duplicate --no-symbols true --source github --api-key ${{ secrets.GIT_PACK }}
 
       # Pushing the generated package to NuGet package store.
       - name: Push to NuGet
@@ -47,4 +45,4 @@ jobs:
         with:
             PROJECT_FILE_PATH: src/RemoteDispatcher/src/RemoteDispatcher.csproj
             VERSION_STATIC: ${{ github.event.release.tag_name }}
-            NUGET_KEY: ${{secrets.NUGET_PUSH}}
+            NUGET_KEY: ${{ secrets.NUGET_PUSH }}
