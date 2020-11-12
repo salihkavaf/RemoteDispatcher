@@ -43,6 +43,6 @@ jobs:
       - name: Push to NuGet
         uses: brandedoutcast/publish-nuget@v2.5.2
         with:
-            PROJECT_FILE_PATH: src/RemoteDispatcher/src/RemoteDispatcher.csproj
+            PROJECT_FILE_PATH: src/RemoteDispatcher/RemoteDispatcher.csproj
             VERSION_STATIC: ${{ github.event.release.tag_name }}
             NUGET_KEY: ${{ secrets.NUGET_PUSH }}
