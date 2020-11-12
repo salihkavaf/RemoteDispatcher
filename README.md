@@ -1,5 +1,3 @@
-[![License](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
-
 # RemoteDispatcher
 A .NET Core tool for managing remote Github workflow_dispatch action triggering.
 This tool provides an easier way of triggering the Github workflow_dispatch action through an HTTP request that supports private repositories as well.
