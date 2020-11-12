@@ -35,11 +35,11 @@ jobs:
         working-directory: ./
         
       # Pushing the generateg package to Github packages.
-      - name: Push to GitHub
-        run: >
-          dotnet nuget push
-          ./src/RemoteDispatcher/nupkg/RemoteDispatcher.${{ github.event.release.tag_name }}.nupkg
-          --skip-duplicate --no-symbols true --source github --api-key ${NUGET_AUTH_TOKEN}
+#       - name: Push to GitHub
+#         run: >
+#           dotnet nuget push
+#           ./src/RemoteDispatcher/nupkg/RemoteDispatcher.${{ github.event.release.tag_name }}.nupkg
+#           --skip-duplicate --no-symbols true --source github --api-key ${NUGET_AUTH_TOKEN}
 
       # Pushing the generated package to NuGet package store.
       - name: Push to NuGet
