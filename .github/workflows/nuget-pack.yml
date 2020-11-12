@@ -20,7 +20,7 @@ jobs:
       - name: Build Project
         run: |
           cd src/RemoteDispatcher
-          dotnet build RemoteDispatcher.csproj -c Release --no-restore
+          dotnet build RemoteDispatcher.csproj -c Release
       
       # Generate the nuget package to push it later..
       - name: Generate NuGet package
