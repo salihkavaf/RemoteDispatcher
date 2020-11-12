@@ -12,7 +12,7 @@ To install this tool, run the following cmd query:
 dotnet tool install -g RemoteDispatcher
 ```
 
-or install the .nuget package and run the following query:
+or install the .nupkg package and run the following query:
 ```
 dotnet tool install dotnetsay --tool-path c:\path\to\package
 ```
