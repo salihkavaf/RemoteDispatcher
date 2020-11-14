@@ -39,7 +39,7 @@ RemoteDispatcher also supports private repositories. However, to use this featur
 
 ### Example
 
-**repo_dispatch_test.yml**
+- **repo_dispatch_test.yml**
 ```yml
 name: Workflow Dispatch Test
 
@@ -57,7 +57,7 @@ jobs:
 ```
 This file represents a Github workflow action that simply creates a folder with the specified name on the specified runner.
 
-**data.json**
+- **data.json**
 ```json
 {
     "runner": "self-hosted",
