@@ -35,6 +35,8 @@ The tool supports the following operations:
 | -p\|--is-private     | The flag indicating whether the target repo id private or not.                                    |
 | -f\|--data-file      | The path to the JSON file that contains the client payload data to load.                          |
 
+RemoteDispatcher also supports private repositories. However, to use this feature, the tool requires an environment variable called `SALIH_RD_TOKEN`, which should contain a personal access token that has the workflow scope defined.
+
 ### Example
 This file contains the client payload data to sent along with the trigger request.
 
