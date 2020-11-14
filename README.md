@@ -33,3 +33,38 @@ The tool supports the following operations:
 | -e\|--event-type     | Required.A custom webhook event name.                                                             |
 | -d\|--client-payload | JSON payload with extra information about the webhook event that your action or workflow may use. |
 | -p\|--is-private     | The flag indicating whether the target repo id private or not.                                    |
+| -f\|--data-file      | The path to the JSON file that contains the client payload data to load.                          |
+
+### Example
+This file contains the client payload data to sent along with the trigger request.
+
+**repo_dispatch_test.yml**
+```yml
+name: Workflow Dispatch Test
+
+on:
+  repository_dispatch:
+    types: [fetched]
+
+jobs:
+  printInputs:
+    runs-on: ${{ github.event.client_payload.runner }}
+    steps:
+    - run: |
+        C:
+        mkdir ${{ github.event.client_payload.folder_name }}
+```
+This file represents a Github workflow action that simply creates a folder with the specified name on the specified runner.
+
+**data.json**
+```json
+{
+    "runner": "self-hosted",
+    "folder_name": "MyFile"
+}
+```
+
+Now, all we need to do is running the following command to trigger the event that will start the action.
+```
+salih-rd dispatch-repo --owner [username/organization] --repo [repository] --event-type fetched --is-private true --data-file C:\path\to\data.json
+```
