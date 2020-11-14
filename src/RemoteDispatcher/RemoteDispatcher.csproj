@@ -9,13 +9,16 @@
 	<PackageOutputPath>./nupkg</PackageOutputPath>
 	<Authors>Salih Kavaf</Authors>
 	<Description>A .NET Core tool for managing remote Github workflow_dispatch action triggering.</Description>
-	<RepositoryUrl>https://github.com/salihkavaf/RemoteDispatcherApp.git</RepositoryUrl>
+	<RepositoryUrl>https://github.com/salihkavaf/RemoteDispatcher.git</RepositoryUrl>
 	<RepositoryType>git</RepositoryType>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<PackageTags>github actions, repository_dispatch, github event</PackageTags>
 	<NeutralLanguage>en-GB</NeutralLanguage>
 	<Copyright />
 	<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+	<AssemblyVersion>1.1.0.0</AssemblyVersion>
+	<FileVersion>1.1.0.0</FileVersion>
+	<Version>1.1.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
