@@ -38,7 +38,6 @@ The tool supports the following operations:
 RemoteDispatcher also supports private repositories. However, to use this feature, the tool requires an environment variable called `SALIH_RD_TOKEN`, which should contain a personal access token that has the workflow scope defined.
 
 ### Example
-This file contains the client payload data to sent along with the trigger request.
 
 **repo_dispatch_test.yml**
 ```yml
@@ -65,6 +64,8 @@ This file represents a Github workflow action that simply creates a folder with 
     "folder_name": "MyFile"
 }
 ```
+This file contains the client payload data to sent along with the trigger request.
+
 
 Now, all we need to do is running the following command to trigger the event that will start the action.
 ```
