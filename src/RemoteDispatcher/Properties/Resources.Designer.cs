@@ -78,13 +78,36 @@ namespace RemoteDispatcher.Properties {
             return string.Format(ResourceManager.GetString("RequiredAttributeError"), attrName);
         }
 
-
         /// <summary>
         ///   Looks up a localized string that represents the environment variables prefix.
         /// </summary>
         internal static string EnvPrefix
         {
             get => ResourceManager.GetString("EnvPrefix", resourceCulture);
+        }
+
+        /// <summary>
+        ///   Looks up a localized string that represents the name of the repository dispatch command.
+        /// </summary>
+        internal static string RepoDispatchName
+        {
+            get => ResourceManager.GetString("RepoDispatchName", resourceCulture);
+        }
+
+        /// <summary>
+        ///   Looks up a localized string that represents the description of the repository dispatch command.
+        /// </summary>
+        internal static string RepoDispatchDescription
+        {
+            get => ResourceManager.GetString("RepoDispatchDescription", resourceCulture);
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The data file cannot be null or empty..
+        /// </summary>
+        internal static string ErrorRepoDispatchInvalidData
+        {
+            get => ResourceManager.GetString("ErrorRepoDispatchInvalidData", resourceCulture);
         }
     }
 }

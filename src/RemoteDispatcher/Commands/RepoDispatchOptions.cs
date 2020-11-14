@@ -39,5 +39,11 @@ namespace RemoteDispatcher.Commands
         /// </summary>
         [Name("p", "is-private"), Description("The flag indicating whether the target repo id private or not.")]
         public bool IsPrivate { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the path to the file that contains the client payload data to load.
+        /// </summary>
+        [Name("f", "data-file"), Description("The path to the JSON file that contains the client payload data to load.")]
+        public string DataFile { get; set; }
     }
 }

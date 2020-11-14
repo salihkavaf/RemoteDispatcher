@@ -1,8 +1,10 @@
 ﻿using MatthiWare.CommandLine.Abstractions.Command;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
+using RemoteDispatcher.Properties;
 using System;
 using System.Diagnostics;
+using System.Dynamic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -25,9 +27,6 @@ namespace RemoteDispatcher.Commands
             this.configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
-        private const string Name = "dispatch-repo";
-        private const string Description = "Triggers a Github action repository_dispatch event remotely.";
-
         private const string Server = "https://api.github.com";
         private const string RelativeUri = "repos/{0}/{1}/dispatches";
         private readonly IConfiguration configuration;
@@ -35,8 +34,8 @@ namespace RemoteDispatcher.Commands
         /// <inheritdoc />
         public override void OnConfigure(ICommandConfigurationBuilder builder)
         {
-            builder.Name(Name);
-            builder.Description(Description);
+            builder.Name(Resources.RepoDispatchName);
+            builder.Description(Resources.RepoDispatchDescription);
             builder.Required(false);
         }
 
@@ -86,6 +85,8 @@ namespace RemoteDispatcher.Commands
         /// </returns>
         private async Task<HttpResponseMessage> ExecuteHttpPostAsync(RepoDispatchOptions options, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             using var client = new HttpClient();
 
             // Set the request URI..
@@ -102,6 +103,7 @@ namespace RemoteDispatcher.Commands
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(options.Accept));
             client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue(Encoding.UTF8.BodyName));
 
+
             if (options.IsPrivate)
             {
                 var section = configuration.GetSection("TOKEN");
@@ -111,8 +113,12 @@ namespace RemoteDispatcher.Commands
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", section.Value);
             }
 
+            // Load the extra data if provided..
+            var client_payload = await LoadDataAsync(options, cancellationToken);
+            
+
             // Set the response content..
-            var json = JsonSerializer.Serialize(new { event_type = options.EventType });
+            var json = JsonSerializer.Serialize(new { event_type = options.EventType, client_payload });
             var jsonContent = new StringContent(json);
 
             // Execute the request..
@@ -127,6 +133,8 @@ namespace RemoteDispatcher.Commands
         /// <returns>The <see cref="Task"/> object that represents the asynchronous operation.</returns>
         private static async Task LogErrorsAsync(HttpResponseMessage response, CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             var statusCode = (int)response.StatusCode;
             using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
             using var reader = new StreamReader(stream);
@@ -137,6 +145,39 @@ namespace RemoteDispatcher.Commands
             Console.Write($"{ReasonPhrases.GetReasonPhrase(statusCode)} [{statusCode}]");
             Console.WriteLine(message);
             Console.ResetColor();
+        }
+
+        /// <summary>
+        /// Loads and returns the extra data if provided.
+        /// </summary>
+        /// <param name="options">The options object to get data or data source from.</param>
+        /// <param name="cancellationToken">The token to check whether the operation should be canceled or not.</param>
+        /// <returns>The extra data if provided; otherwise, null.</returns>
+        private static async Task<object> LoadDataAsync(RepoDispatchOptions options, CancellationToken cancellationToken)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+
+            // Return null if no data were provided..
+            if (options.ClientPayload == null && options.DataFile == null)
+                return JsonSerializer.Deserialize<dynamic>("{}");
+
+            string data = null;
+            // Load the data file if provided..
+            if (options.DataFile != null)
+            {
+                data = await File.ReadAllTextAsync(options.DataFile, Encoding.UTF8, cancellationToken);
+
+                // Throw an exception if the provided data was null or empty.
+                if (string.IsNullOrEmpty(data.Trim()))
+                {
+                    throw new InvalidOperationException(Resources.ErrorRepoDispatchInvalidData);
+                }
+            }
+            else if (options.ClientPayload != null)
+            {
+                data = options.ClientPayload;
+            }
+            return JsonSerializer.Deserialize<dynamic>(data);
         }
     }
 }

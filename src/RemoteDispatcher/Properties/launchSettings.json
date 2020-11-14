@@ -2,7 +2,7 @@
   "profiles": {
     "RemoteDispatcher": {
       "commandName": "Project",
-      "commandLineArgs": "dispatch-repo -o Primorisoft -r Primorisoft.Data -e myEvent -p true"
+      "commandLineArgs": "dispatch-repo -o Primorisoft -r Primorisoft.Da -e fetched -p true -f C:\\Users\\Salih\\Desktop"
     }
   }
 }
